@@ -17,14 +17,13 @@ jobs:
           node-version: "15"
 
       - name: Install linting tools
-        run: >-
-          npm install
-            markdownlint-cli2
-            textlint
-            textlint-plugin-review
-            textlint-rule-preset-japanese
-            textlint-rule-preset-ja-technical-writing
-            textlint-rule-prh
+        run: npm install
+          markdownlint-cli2
+          textlint
+          textlint-plugin-review
+          textlint-rule-preset-japanese
+          textlint-rule-preset-ja-technical-writing
+          textlint-rule-prh
 
       - name: markdownlint
         run: npx markdownlint-cli2 "**/*.md"
