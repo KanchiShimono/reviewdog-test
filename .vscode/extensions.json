@@ -5,6 +5,7 @@
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
     "yzhang.markdown-all-in-one",
+    "shd101wyy.markdown-preview-enhanced",
     "DavidAnson.vscode-markdownlint",
     "taichi.vscode-textlint",
     "esbenp.prettier-vscode"
