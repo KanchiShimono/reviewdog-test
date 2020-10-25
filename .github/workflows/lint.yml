@@ -1,0 +1,41 @@
+name: Linting
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    name: Lint markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "15"
+
+      - name: Install linting tools
+        run: npm install
+          markdownlint-cli2
+          textlint
+          textlint-plugin-review
+          textlint-rule-preset-japanese
+          textlint-rule-preset-ja-technical-writing
+          textlint-rule-prh
+
+      - name: markdownlint
+        run: npx markdownlint-cli2 "**/*.md"
+
+      - name: Setup reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+      - name: textlint and reviewdog
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx textlint -f checkstyle "articles/**/*.md" | reviewdog -f=checkstyle -name="textlint" -reporter=github-pr-review -level=error
